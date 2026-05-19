@@ -1,0 +1,24 @@
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+
+        adj = defaultdict(list)
+        # create adjacency list
+        for src, dst in tickets:
+            adj[src].append(dst)
+        
+        # sort the itinerary based on the lexical order
+        for origin in adj:
+            adj[origin].sort(reverse=True)
+
+        stack = ["JFK"]
+        res = []
+
+        while stack:
+            curr = stack[-1]
+            if not adj[curr]:
+                res.append(stack.pop())
+            else:
+                stack.append(adj[curr].pop())
+
+        return res[::-1]
+        
